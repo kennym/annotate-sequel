@@ -5,13 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = "annotate-sequel"
-  s.version = "1.0.0.pre1"
+  s.version = "1.0.0.pre2"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kenny Meyer"]
   s.date = "2013-11-10"
   s.description = "Annotate Sequel models"
   s.email = "kenny@kennymeyer.net"
+  s.executables = ["annotate"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -25,8 +26,10 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "annotate-sequel.gemspec",
+    "bin/annotate",
     "lib/annotate-sequel.rb",
     "lib/annotate_sequel/model.rb",
+    "lib/annotate_sequel/tasks.rb",
     "lib/annotate_sequel/version.rb",
     "lib/tasks/annotate_sequel.rake",
     "spec/annotate-sequel_spec.rb",

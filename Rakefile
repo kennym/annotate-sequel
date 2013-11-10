@@ -12,6 +12,7 @@ end
 require 'rake'
 
 require 'jeweler'
+require 'lib/annotate_sequel/version.rb'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "annotate-sequel"
@@ -21,6 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Annotate Sequel models}
   gem.email = "kenny@kennymeyer.net"
   gem.authors = ["Kenny Meyer"]
+  gem.version = AnnotateSequel::Version::STRING
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

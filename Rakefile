@@ -12,7 +12,7 @@ end
 require 'rake'
 
 require 'jeweler'
-require 'lib/annotate_sequel/version.rb'
+require './lib/annotate-sequel'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "annotate-sequel"

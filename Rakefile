@@ -17,9 +17,9 @@ Jeweler::Tasks.new do |gem|
   gem.name = "annotate-sequel"
   gem.homepage = "http://github.com/kennym/annotate-sequel"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "knny.myer@gmail.com"
+  gem.summary = %Q{Annotate Sequel models}
+  gem.description = %Q{Annotate Sequel models}
+  gem.email = "kenny@kennymeyer.net"
   gem.authors = ["Kenny Meyer"]
   # dependencies defined in Gemfile
 end

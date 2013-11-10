@@ -2,6 +2,9 @@
 
 A gem to annotate your Sequel models.
 
+Currently only tested for Rails 3 and only supports Sequel 3.x as of right now.
+Eventually this gem will support Sequel 4.
+
 == Example
 
 The schema comment looks like this:
@@ -30,13 +33,17 @@ For the `Gemfile`
 
     $ gem 'annotate-sequel'
 
-To install on your system
-
-    $ gem install annotate-sequel
-
 == Usage
 
+In your Rails project run:
+
     $ annotate
+
+That's it.
+
+== TODO
+
+* Update models after migrations
 
 == Contributing to annotate-sequel
  

@@ -2,6 +2,8 @@
 
 A gem to annotate your Sequel models.
 
+== DISCLAIMER: Not ready for production, yet
+
 Currently only tested for Rails 3 and only supports Sequel 3.x as of right now.
 Eventually this gem will support Sequel 4.
 

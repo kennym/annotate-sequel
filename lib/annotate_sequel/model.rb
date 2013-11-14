@@ -28,7 +28,7 @@ class AnnotateSequel
       def get_model_files
         models = []
         begin
-          Dir.chdir(@model_dir) do
+          Dir.chdir(model_dir) do
             models = Dir["**/*.rb"]
           end
         rescue SystemCallError

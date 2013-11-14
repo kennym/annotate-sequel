@@ -20,9 +20,4 @@ module Annotate
     Rake::Task[:environment].invoke rescue nil
     self.load_tasks
   end
-
-  def self.eager_load
-    klass = Rails::Application.send(:subclasses).first
-    klass.eager_load!
-  end
 end

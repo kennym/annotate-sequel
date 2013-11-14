@@ -39,6 +39,7 @@ class AnnotateSequel
       end
 
       def get_model_class(file)
+        require File.expand_path("#{model_dir}/#{file}")
         model_path = file.gsub(/\.rb$/, '')
         get_loaded_model(model_path) || get_loaded_model(model_path.split("/").last)
       end
@@ -49,7 +50,8 @@ class AnnotateSequel
             Class === c and
             c.ancestors.respond_to?(:include?) and
             c.ancestors.include?(Sequel::Model)
-          end
+          end.
+          detect { |c| underscore(c.name) == model_path }
       end
 
       def annotate_model_file(annotated, file)

@@ -11,10 +11,10 @@ end
 here = File.expand_path(File.dirname __FILE__)
 $:<< "#{here}/../lib"
 
+require File.expand_path('config/environment')
 target = {
   :klass => AnnotateSequel::Model,
   :task => :do_annotations,
 }
 
-Annotate.eager_load(options)
 target[:klass].send(target[:task])

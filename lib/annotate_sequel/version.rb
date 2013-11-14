@@ -5,6 +5,6 @@ class AnnotateSequel
     PATCH = 0
     BUILD = 'final'
 
-    STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
+    STRING = [MAJOR, MINOR, PATCH].compact.join('.')
   end
 end

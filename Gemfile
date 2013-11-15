@@ -10,6 +10,4 @@ group :development do
   gem "bundler", "~> 1.0"
   gem "jeweler", "~> 1.8.7"
   gem "simplecov", ">= 0"
-  gem "debugger", ">= 0"
-  gem "sqlite3"
 end

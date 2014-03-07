@@ -56,7 +56,7 @@ class AnnotateSequel
             c.ancestors.respond_to?(:include?) and
             c.ancestors.include?(Sequel::Model)
           end.
-          detect { |c| c.name.underscore == model_path }
+          detect { |c| c.name.demodulize.underscore == model_path }
       end
 
       def annotate_model_file(annotated, file)
@@ -64,7 +64,7 @@ class AnnotateSequel
           klass = get_model_class(file)
           if klass && klass < Sequel::Model
             if annotate(klass, file)
-              annotated << klass
+              annotated << klass.to_s.demodulize
             end
           end
         rescue Exception => e

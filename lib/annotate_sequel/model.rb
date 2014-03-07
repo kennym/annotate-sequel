@@ -1,6 +1,11 @@
+require 'sequel'
+
+Sequel.extension :inflector
+
 class AnnotateSequel
-  COMPAT_PREFIX    = "== Schema Info"
-  PATTERN          = /^\n?# (?:#{COMPAT_PREFIX}).*?\n(#.*\n)*\n*/
+  COMPAT_PREFIX = "== Schema Info"
+  PATTERN       = /^\n?# (?:#{COMPAT_PREFIX}).*?\n(#.*\n)*\n*/
+
   module Model
     class << self
       def model_dir
@@ -51,7 +56,7 @@ class AnnotateSequel
             c.ancestors.respond_to?(:include?) and
             c.ancestors.include?(Sequel::Model)
           end.
-          detect { |c| underscore(c.name) == model_path }
+          detect { |c| c.name.underscore == model_path }
       end
 
       def annotate_model_file(annotated, file)
@@ -110,7 +115,7 @@ class AnnotateSequel
           info = schema_info(klass)
           did_annotate = false
           model_file_name = File.join(model_dir, file)
-          
+
           if annotate_one_file(model_file_name, info)
             did_annotate = true
           end
@@ -119,13 +124,6 @@ class AnnotateSequel
         rescue Exception => e
           puts "Unable to annotate #{file}: #{e.message}"
         end
-      end
-
-      private
-
-      def underscore(word)
-        word.gsub(/::/, '/').gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-          gsub(/([a-z\d])([A-Z])/,'\1_\2').tr("-", "_").downcase
       end
     end
   end

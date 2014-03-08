@@ -1,4 +1,5 @@
 require 'sequel'
+require 'terminal-table'
 
 Sequel.extension :inflector
 
@@ -17,17 +18,40 @@ class AnnotateSequel
       end
 
       def schema_info(klass)
+        fks = process_fks(klass)
 
-        info = "# Schema Info\n"
-        info << "# \n"
-        info << "# Table name: #{klass.table_name}\n"
-        info << "# \n"
+        table = Terminal::Table.new
+        table.title = klass.table_name
+        table.headings = ["Column", "Ruby Type", "DB Type", "Default", "Null?", "PK?", "FK?"]
 
-        klass.db_schema.each do |key, value|
-          type = value.delete(:type)
-          info << "#  #{key} :#{type}, #{value}\n"
+        table.rows = klass.db_schema.map do |key, value|
+          [ key,
+            value[:type],
+            value[:db_type],
+            value[:ruby_default] || '-',
+            value[:allow_null]  ? 'Y' : 'N',
+            value[:primary_key] ? 'Y' : 'N',
+            fks.include?(key)   ? 'Y' : 'N'
+          ]
         end
-        info << "# \n"
+
+        # Align to the center the columns:
+        # Default, Null?, PK? and FK?
+        for i in 3..6
+          table.align_column(i, :center)
+        end
+
+        # Comment the table
+        output = String.new
+        table.to_s.each_line { |line| output << "# #{line}" }
+
+        output << "\n\n"
+      end
+
+      def process_fks(model)
+        model.db.foreign_key_list(:items).map do |x|
+          x[:columns]
+        end.flatten
       end
 
       def get_model_files
@@ -88,26 +112,18 @@ class AnnotateSequel
       def annotate_one_file(file_name, info_block)
         if File.exist?(file_name)
           old_content = File.read(file_name)
+          pattern = /^#\s[\+\|].+[\+\|]\n*/
 
-          header_pattern = /(^# Table name:.*?\n(#.*[\r]?\n)*[\r]?)/
-          old_header = old_content.match(header_pattern).to_s
-          new_header = info_block.match(header_pattern).to_s
+          return false if old_content.scan(pattern).join == info_block
 
-          column_pattern = /^#[\t ]+\w+[\t ]+.+$/
-          old_columns = old_header && old_header.scan(column_pattern).sort
-          new_columns = new_header && new_header.scan(column_pattern).sort
-          if old_columns == new_columns
-            return false
+          File.open(file_name, "wb") do |f|
+            f.puts info_block + old_content.gsub(pattern, '')
           end
 
-          old_content.sub!(PATTERN, '')
-          new_content = info_block + "\n" + old_content
-
-          File.open(file_name, "wb") { |f| f.puts new_content }
           return true
-        else
-          return false
         end
+
+        false
       end
 
       def annotate(klass, file)

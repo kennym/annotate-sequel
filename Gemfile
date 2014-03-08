@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
 gem 'sequel', '>= 3', '<=5'
+gem 'terminal-table', '~> 1.4'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

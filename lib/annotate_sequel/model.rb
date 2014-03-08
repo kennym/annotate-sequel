@@ -4,9 +4,6 @@ require 'terminal-table'
 Sequel.extension :inflector
 
 class AnnotateSequel
-  COMPAT_PREFIX = "== Schema Info"
-  PATTERN       = /^\n?# (?:#{COMPAT_PREFIX}).*?\n(#.*\n)*\n*/
-
   module Model
     class << self
       def model_dir
@@ -86,10 +83,8 @@ class AnnotateSequel
       def annotate_model_file(annotated, file)
         begin
           klass = get_model_class(file)
-          if klass && klass < Sequel::Model
-            if annotate(klass, file)
-              annotated << klass.to_s.demodulize
-            end
+          if klass && annotate(klass, file)
+            annotated << klass.to_s.demodulize
           end
         rescue Exception => e
           puts "Unable to annotate #{file}: #{e.message}"
@@ -99,44 +94,37 @@ class AnnotateSequel
 
       def do_annotations
         annotated = []
+
         get_model_files.each do |file|
           annotate_model_file(annotated, file)
         end
-        if annotated.empty?
-          puts "Nothing annotated"
-        else
-          puts "Annotated (#{annotated.length}): #{annotated.join(', ')}"
-        end
+
+        puts annotated.empty? ?
+          "Nothing annotated" :
+          "Annotated (#{annotated.length}): #{annotated.join(', ')}"
       end
 
       def annotate_one_file(file_name, info_block)
         if File.exist?(file_name)
-          old_content = File.read(file_name)
+          current = File.read(file_name)
           pattern = /^#\s[\+\|].+[\+\|]\n*/
 
-          return false if old_content.scan(pattern).join == info_block
+          return false if current.scan(pattern).join == info_block
 
           File.open(file_name, "wb") do |f|
-            f.puts info_block + old_content.gsub(pattern, '')
+            f.puts info_block + current.gsub(pattern, '')
           end
 
-          return true
+          true
+        else
+          false
         end
-
-        false
       end
 
       def annotate(klass, file)
         begin
-          info = schema_info(klass)
-          did_annotate = false
           model_file_name = File.join(model_dir, file)
-
-          if annotate_one_file(model_file_name, info)
-            did_annotate = true
-          end
-
-          return did_annotate
+          annotate_one_file model_file_name, schema_info(klass)
         rescue Exception => e
           puts "Unable to annotate #{file}: #{e.message}"
         end

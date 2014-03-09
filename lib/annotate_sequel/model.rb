@@ -46,7 +46,7 @@ class AnnotateSequel
       end
 
       def process_fks(model)
-        model.db.foreign_key_list(:items).map do |x|
+        model.db.foreign_key_list(model.table_name).map do |x|
           x[:columns]
         end.flatten
       end

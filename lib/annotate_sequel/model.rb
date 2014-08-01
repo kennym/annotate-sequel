@@ -77,7 +77,7 @@ class AnnotateSequel
             c.ancestors.respond_to?(:include?) and
             c.ancestors.include?(Sequel::Model)
           end.
-          detect { |c| c.name.demodulize.underscore == model_path }
+          detect { |c| c.name && c.name.demodulize.underscore == model_path }
       end
 
       def annotate_model_file(annotated, file)

@@ -59,11 +59,12 @@ class AnnotateSequel
 
       # following this format from i think mysql
       # UNIQUE KEY `country` (`country`,`tag`)
+      # KEY `index_histories_user` (`user_id`)
       def process_index(name, index)
         if index[:unique]
-          "UNIQUE KEY '#{name}' ('#{index[:columns].join("', '")}')"
+          "UNIQUE INDEX '#{name}' ('#{index[:columns].join("', '")}')"
         else
-          "UNKNOWN INDEX TYPE - #{name} - #{index.inspect}"
+          "INDEX '#{name}' ('#{index[:columns].join("', '")}')"
         end
       end
 

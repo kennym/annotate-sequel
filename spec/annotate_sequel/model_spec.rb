@@ -15,6 +15,7 @@ describe AnnotateSequel::Model do
         Float  :price, default: 0
 
         index [:manufacturer_name, :manufacturer_location], :name=>:name, :unique=>true
+        index [:manufacturer_name], :name=>:manufacturer_name
       end
     end
 
@@ -39,7 +40,8 @@ describe AnnotateSequel::Model do
       # | price                 | float     | double precision |   0.0   |   Y   |  N  |  N  |
       # +-----------------------+-----------+------------------+---------+-------+-----+-----+
       # Indexes:
-      #\tUNIQUE KEY 'name' ('manufacturer_name', 'manufacturer_location')
+      #\tINDEX 'manufacturer_name' ('manufacturer_name')
+      #\tUNIQUE INDEX 'name' ('manufacturer_name', 'manufacturer_location')
       OUTPUT
 
       AnnotateSequel::Model.schema_info(klass).should eq output

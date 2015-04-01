@@ -13,6 +13,8 @@ describe AnnotateSequel::Model do
         String :manufacturer_location
         String :name, default: "John"
         Float  :price, default: 0
+
+        index [:manufacturer_name, :manufacturer_location], :name=>:name, :unique=>true
       end
     end
 
@@ -36,12 +38,15 @@ describe AnnotateSequel::Model do
       # | name                  | string    | varchar(255)     |  John   |   Y   |  N  |  N  |
       # | price                 | float     | double precision |   0.0   |   Y   |  N  |  N  |
       # +-----------------------+-----------+------------------+---------+-------+-----+-----+
+      # Indexes:
+      #\tUNIQUE KEY 'name' ('manufacturer_name', 'manufacturer_location')
       OUTPUT
 
       AnnotateSequel::Model.schema_info(klass).should eq output
     end
 
     it "should support indexes" do
+      # currently adding tests to the main test itself..
       pending
     end
   end

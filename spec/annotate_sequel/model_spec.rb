@@ -39,9 +39,14 @@ describe AnnotateSequel::Model do
       # | name                  | string    | varchar(255)     |  John   |   Y   |  N  |  N  |
       # | price                 | float     | double precision |   0.0   |   Y   |  N  |  N  |
       # +-----------------------+-----------+------------------+---------+-------+-----+-----+
-      # Indexes:
-      #\tINDEX 'manufacturer_name' ('manufacturer_name')
-      #\tUNIQUE INDEX 'name' ('manufacturer_name', 'manufacturer_location')
+      # +-------------------+------------------------------------------+---------+
+      # |                                Indexes                                 |
+      # +-------------------+------------------------------------------+---------+
+      # | Name              | Columns                                  | Unique? |
+      # +-------------------+------------------------------------------+---------+
+      # | manufacturer_name | manufacturer_name                        | false   |
+      # | name              | manufacturer_name, manufacturer_location | true    |
+      # +-------------------+------------------------------------------+---------+
       OUTPUT
 
       AnnotateSequel::Model.schema_info(klass).should eq output

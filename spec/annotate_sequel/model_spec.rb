@@ -11,6 +11,7 @@ describe AnnotateSequel::Model do
 
         String :manufacturer_name, size: 50
         String :manufacturer_location
+        Boolean :in_stock, default: false
         String :name, default: "John"
         Float  :price, default: 0
       end
@@ -33,6 +34,7 @@ describe AnnotateSequel::Model do
       # | category_id           | integer   | integer          |    -    |   N   |  N  |  Y  |
       # | manufacturer_name     | string    | varchar(50)      |    -    |   Y   |  N  |  Y  |
       # | manufacturer_location | string    | varchar(255)     |    -    |   Y   |  N  |  Y  |
+      # | in_stock              | boolean   | Boolean          |  false  |   Y   |  N  |  N  |
       # | name                  | string    | varchar(255)     |  John   |   Y   |  N  |  N  |
       # | price                 | float     | double precision |   0.0   |   Y   |  N  |  N  |
       # +-----------------------+-----------+------------------+---------+-------+-----+-----+

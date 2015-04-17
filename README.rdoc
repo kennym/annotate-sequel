@@ -57,6 +57,6 @@ That's it.
 
 == Copyright
 
-Copyright (c) 2013 Kenny Meyer. See LICENSE.txt for
+Copyright (c) 2013-2015 Kenny Meyer. See LICENSE.txt for
 further details.
 

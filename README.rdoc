@@ -1,5 +1,7 @@
 = annotate-sequel
 
+**DEPRECATED**: Please use the fork https://github.com/jeremyevans/sequel-annotate instead.
+
 A gem to annotate your Sequel models.
 
 Currently only tested for Rails 3 and only supports Sequel 3.x as of right now.
